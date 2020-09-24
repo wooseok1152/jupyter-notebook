@@ -1,44 +1,66 @@
 import sys
-import time
 
-start = time.time()
-sys.stdin = open(r"C:\Users\my\Desktop\Documents\파이썬 알고리즘 문제풀이(코딩테스트 대비)\섹션 3\5. 수들의 합\in4.txt")
-n, m = list(map(int, input().split()))
-a = list(map(int, input().split()))
+sys.stdin = open(r"C:\Users\my\Desktop\Documents\파이썬 알고리즘 문제풀이(코딩테스트 대비)\섹션 5\1. 가장 큰 수\in1.txt")
 
-# print(n)
-# print(m)
-# print(a)
-
-def numbers_sum_ocassion(m,number_list):
+input_int, m = input().split()
+m = int(m)
+input_list = []
+for i in range(len(input_int)):
     
-    start = time.time()
+    input_list.append(int(input_int[i]))
+
+def find_maximum(m, input_list):
+    
     count = 0
-    for i in range(len(number_list)):
+    stack = []
+    picked_number = input_list.pop(0)
+    stack.append(picked_number)
+    for i in range(0, len(input_list)):
         
-        for j in range(i, len(number_list)):
+        picked_number = input_list.pop(0)
+        while True:
             
-            if i == j:
+            if len(stack) == 0:
                 
-                if number_list[i] == m:
-                    
-                    count = count + 1
-                    break
+                stack.append(picked_number)
+                break
                 
-                continue
-            
-#             print(sum(number_list[i:j+1]))
-            if sum(number_list[i:j+1]) == m:
+            elif stack[-1] < picked_number:
                 
+                stack.pop()
                 count = count + 1
-#                 print("count :", count)
+                
+            elif stack[-1] >= picked_number:
+                
+                stack.append(picked_number)
                 break
             
-            if sum(number_list[i:j+1]) > m:
-
-                break
+            if count == m :
                 
-    return count
-
-print(numbers_sum_ocassion(m, a))
-print(time.time() - start)
+                stack.append(picked_number)
+                break
+        
+        if count == m :
+            
+            break
+        
+    if count != m:
+        
+        for i in range(m - count):
+            
+            stack.pop()
+        
+    if len(input_list) != 0:
+        
+        for i in input_list:
+            
+            stack.append(i)
+        
+    result = ""
+    for i in stack:
+        
+        result = result + str(i)
+        
+    print(result)
+    
+find_maximum(m, input_list)
